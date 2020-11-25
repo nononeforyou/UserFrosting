@@ -1,4 +1,12 @@
 {# Page variables needed by client-side code (Javascript). #}
 {% autoescape 'js' %}
-    var page = {{ page | json_encode(constant('JSON_PRETTY_PRINT')) | raw }};
+  if (typeof page === 'undefined') {
+    var page = {};
+  }
+
+  page = $.extend(
+    true,               // deep extend
+    {{ page | json_encode(constant('JSON_PRETTY_PRINT')) | raw }},
+    page
+  );
 {% endautoescape %}
